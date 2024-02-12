@@ -21,7 +21,27 @@ app.get("/about",(req, res)=>{
     res.render("about")
     });
 
-const PORT =  4100;
+app.get("/products",(req, res)=>{
+res.render("products");
+});
+
+app.get("/add",(req, res)=>{
+res.render("add");
+});
+
+app.get("/login",(req, res)=>{
+    res.render("login");
+    });
+
+app.get("/registr",(req, res)=>{
+res.render("registr");
+});
+        
+    
+    
+    
+
+    const PORT =  4100;
 
 app.listen(PORT, ()=>{
     console.log("Server is running  ",PORT)
