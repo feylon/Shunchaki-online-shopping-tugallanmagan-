@@ -11,7 +11,7 @@ router.get("/",(req, res)=>{
             title:"about"
         })
         });
-    
+     
     router.get("/products",(req, res)=>{
     res.render("products",{
         title:"products",
