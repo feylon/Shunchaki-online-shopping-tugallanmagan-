@@ -1,6 +1,7 @@
 import  express  from "express";
 import {create} from "express-handlebars";
-
+import AuthRoutes from "./routes/auth.js";
+import ProductRoutes from "./routes/products.js"
 const app = express();
 
 const hbs = create({
@@ -14,22 +15,8 @@ app.set('views', './views');
 
 app.use(express.json());
 
-app.use(()=>{console.log("salom barchaga")})
-app.get("/",(req, res)=>{
-res.render("index")
-});
-
-app.get("/about",(req, res)=>{
-    res.render("about")
-    });
-
-app.get("/products",(req, res)=>{
-res.render("products");
-});
-
-app.get("/add",(req, res)=>{
-res.render("add");
-});
+app.use(AuthRoutes);
+app.use(ProductRoutes);
 
         
     
