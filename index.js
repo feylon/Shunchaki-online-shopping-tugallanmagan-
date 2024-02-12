@@ -13,6 +13,8 @@ app.set('view engine', 'hbs');
 app.set('views', './views');
 
 app.use(express.json());
+
+app.use(()=>{console.log("salom barchaga")})
 app.get("/",(req, res)=>{
 res.render("index")
 });
@@ -29,13 +31,6 @@ app.get("/add",(req, res)=>{
 res.render("add");
 });
 
-app.get("/login",(req, res)=>{
-    res.render("login");
-    });
-
-app.get("/registr",(req, res)=>{
-res.render("registr");
-});
         
     
     
