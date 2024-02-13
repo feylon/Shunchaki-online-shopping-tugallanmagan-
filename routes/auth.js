@@ -6,20 +6,30 @@ const router = Router();
 
 router.get("/login",(req, res)=>{
     res.render("login",{
-        title:"login"
+        title:"login",
+        isLogin:"true",
+        loginError: req.flash("loginError")
     });
     });
 
 
 router.post("/login",async (req, res)=>{
-    const existUser = await User.findOne(
-        {
-            email:req.body.email 
-        }
-    );
-    if(!existUser) {console.log("User not found");return ;}
-    const isPassEqual = await bcrypt.compare(req.body.password, existUser.password);
+    const {email, password} = req.body;
+
+    if(!email || !password){
+        req.flash("loginError","All field should be is required");
+        res.redirect("/login");
+        return;
+    }
+    const existUser = await User.findOne({email});
+    if(!existUser) {console.log("User not found");
+    req.flash("loginError","User not found");
+        res.redirect("/login");
+    return ;}
+    const isPassEqual = await bcrypt.compare(password, existUser.password);
     if(!isPassEqual){console.log("Parol xato");
+    req.flash("loginError","PArol xato");
+        res.redirect("/login");
     return; 
 }
 
@@ -29,20 +39,39 @@ router.post("/login",async (req, res)=>{
 res.redirect("/")
 });
 
+
+
+
 router.get("/registr",(req, res)=>{
 res.render("registr",{
-    title:"Login"
+    title:"Login",
+    isRegistr:true,
+    registrError:req.flash("RegistrError")
 });
 });
 
 
 router.post("/registr", async (req, res)=>{
-  const  hashedPassword = await bcrypt.hash(req.body.password, 10);  
+    const {firstname, lastname, email, password} = req.body;
+  if(!firstname || !lastname || !email || !password){
+    req.flash("RegistrError","Hamma inputlar required");
+        res.redirect("/registr");
+    return;
+  }
+
+  const candidate =  await User.findOne({email});
+  if(candidate){
+    req.flash("RegistrError",`${email} ro'yxatdan o'tgan`);
+    res.redirect("/registr");
+
+    return;
+  }
+    const  hashedPassword = await bcrypt.hash(password, 10);  
     const UserData = 
 {
-firstName : req.body.firstname,
-lastName : req.body.lastname,
-email : req.body.email,
+firstName : firstname,
+lastName : lastname,
+email : email,
 password : hashedPassword
 };
 console.log(UserData);

@@ -1,6 +1,16 @@
 <div class="w-75 mx-auto">
   <p class="fs-1">Login</p>
   <form action="/login" method="post">
+  <p class="mt-3">
+    {{#if loginError}}
+    <div class="w-50 alert alert-warning alert-dismissible fade show" role="alert">
+    <span>{{loginError}}</span>
+
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{{/if}}
+  </p>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
     <input type="email" name="email" class="form-control w-75" id="exampleInputEmail1" aria-describedby="emailHelp">
