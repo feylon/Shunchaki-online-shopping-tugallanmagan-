@@ -11,8 +11,20 @@ router.get("/login",(req, res)=>{
     });
 
 
-router.post("/login",(req, res)=>{
-console.log(req.body);
+router.post("/login",async (req, res)=>{
+    const existUser = await User.findOne(
+        {
+            email:req.body.email 
+        }
+    );
+    if(!existUser) {console.log("User not found");return ;}
+    const isPassEqual = await bcrypt.compare(req.body.password, existUser.password);
+    if(!isPassEqual){console.log("Parol xato");
+    return; 
+}
+
+    console.log(existUser);
+    console.log(req.body);
 
 res.redirect("/")
 });
@@ -39,4 +51,3 @@ const user = await User.create(UserData)
     });
 
 export default router;
-// 3:24:05
