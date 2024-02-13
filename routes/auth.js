@@ -7,6 +7,12 @@ router.get("/login",(req, res)=>{
     });
     });
 
+
+router.post("/login",(req, res)=>{
+console.log(req.body);
+res.redirect("/")
+})
+
 router.get("/registr",(req, res)=>{
 res.render("registr",{
     title:"Login"
