@@ -11,7 +11,7 @@ router.get("/login",(req, res)=>{
 router.post("/login",(req, res)=>{
 console.log(req.body);
 res.redirect("/")
-})
+});
 
 router.get("/registr",(req, res)=>{
 res.render("registr",{
@@ -19,5 +19,10 @@ res.render("registr",{
 });
 });
 
+
+router.post("/registr",(req, res)=>{
+    console.log(req.body);
+    res.redirect("/login")
+    });
 
 export default router;
