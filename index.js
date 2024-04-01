@@ -6,6 +6,8 @@ import ProductRoutes from "./routes/products.js"
 import * as dotenv from "dotenv" ;
 import flash from "connect-flash";
 import session from "express-session";
+import varMiddleware from "./middleware/var.js";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = express();
@@ -19,11 +21,13 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', './views');
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(session({secret:"Jamshid", resave:false, saveUninitialized:false}));
 // app.use(express.cookieParser('keyboard cat'));
 // app.use(express.session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
+app.use(varMiddleware)
 app.use(express.urlencoded({extended:true}));
 app.use(express.static("public"))
 
